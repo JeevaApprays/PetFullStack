@@ -11,6 +11,7 @@ import com.examly.springapp.repository.PetRepository;
 public class PetService {
     @Autowired
     PetRepository petRepo;
+    
     public Pet createPet(Pet pet){
         return petRepo.save(pet);
     }

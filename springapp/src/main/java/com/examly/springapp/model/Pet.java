@@ -2,18 +2,19 @@ package com.examly.springapp.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 public class Pet {
     
     @Id
-    long id;
-    String name;
-    String species;
-    String breed;
-    int age;
-    String description;
-    String imageUrl;
-    String adoptionStatus;
+   private long id;
+   private String name;
+   private String species;
+   private String breed;
+   private int age;
+   private String description;
+   private String imageUrl;
+   private String adoptionStatus;
 
 }

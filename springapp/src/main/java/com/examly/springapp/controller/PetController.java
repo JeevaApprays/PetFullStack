@@ -25,9 +25,9 @@ public List<Pet> getAllPets(){
     return petService.getAllPets();
 }
 
-
 @PutMapping("/api/pets/{id}")
 public String updatePet(@PathVariable  Long id,@RequestBody Pet pet){
-    return petService.updatePet(id, pet);
+return petService.updatePet(id,pet);
+
     }
 }

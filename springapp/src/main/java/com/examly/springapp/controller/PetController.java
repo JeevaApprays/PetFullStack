@@ -18,5 +18,7 @@ public Pet create (@RequestBody Pet pet){
 return petsrev.createPet(pet);
 }
 
+@GetMapping
+public 
 
 }

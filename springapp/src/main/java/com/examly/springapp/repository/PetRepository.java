@@ -1,5 +1,9 @@
 package com.examly.springapp.repository;
 
-public interface PetRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.examly.springapp.model.Pet;
+
+public interface PetRepository extends JpaRepository<Pet,Long>{
 
 }

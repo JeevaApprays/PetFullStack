@@ -20,4 +20,7 @@ public class Pet {
     private String imageUrl;
     private String adoptionSstatus;
 
+
+    
+
 }

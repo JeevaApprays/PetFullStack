@@ -27,9 +27,12 @@ PetService petService;
 
 @PostMapping("/api/pets")
 public Pet createPet(@RequestBody Pet pet){
-
     return petService.createPet(pet);
 }
 
+@GetMapping("/api/pets")
+public List<Pet> getAllData(Pet pet){
+    return petService.getAllDatas(pet);
+}
 
 }

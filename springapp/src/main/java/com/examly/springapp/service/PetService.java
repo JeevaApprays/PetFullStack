@@ -20,5 +20,7 @@ public Pet createPet(Pet pet){
     return petrepo.save(pet);
 }
 
-
+public List<Pet> getAllDatas(Pet pet){
+    return petrepo.findAll(pet);
+}
 }

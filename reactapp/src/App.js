@@ -11,6 +11,7 @@ const App = () => {
       <Header/>
       <Routes>
         <Route path='/' element={<Parent/>}/>
+        <Route path='/demo' element={<Demo/>}/>
 
 
       </Routes>

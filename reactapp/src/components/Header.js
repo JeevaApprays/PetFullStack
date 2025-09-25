@@ -1,12 +1,17 @@
-import React from 'react'
+import React from "react";
 
 const Header = () => {
   return (
-   <header style={{background:"#000fff"}}>
+    <header className="header">
+      <div className="logo">MyWebsite</div>
+      <nav className="nav">
+        <a href="/">Home</a>
+        <a href="/demo">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+  );
+};
 
-   </header>
-    
-  )
-}
-
-export default Header
+export default Header;

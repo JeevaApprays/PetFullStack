@@ -18,7 +18,7 @@ const clickdec = () => {
   return (
   <div>
 
-    <Login message = "Hello this is Props Content" ></L
+    <Login message = "Hello this is Props Content" ></Login>
 
 <button onClick={clickadd} >plus</button>
 <br/>

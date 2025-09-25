@@ -1,79 +1,56 @@
+// springapp/src/main/java/com/examly/springapp/controller/PetController.java
 package com.examly.springapp.controller;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.examly.springapp.model.Pet;
 import com.examly.springapp.service.PetService;
+import jakarta.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
 @RestController
+@CrossOrigin(origins="https://8081-acdcaacedadaebab331045538adaaadfdebeaone.premiumproject.examly.io")
+@RequestMapping("/api/pets")
 public class PetController {
-    
-@Autowired
-PetService petService;
+    private final PetService svc;
+    public PetController(PetService svc){ this.svc = svc; }
 
-@PostMapping("/api/pets")
-public Pet createPet(@RequestBody Pet pet){
-
-    return petService.createPet(pet);
-}
-
- @GetMapping
-    public List<Pet> getAll(){ 
-        return petService.getAllPets(); 
-    }
+    @GetMapping
+    public List<Pet> getAll(){ return svc.getAllPets(); }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
-        Optional<Pet> opt = petService.getPetById(id);
-        if (opt.isPresent()) {
-            Pet pet = opt.get();
-            // 200 OK with pet as body
-            return ResponseEntity.ok(pet);
-        } else {
-            // 404 with custom JSON message
-            Map<String,String> body = Map.of("message", "Pet with ID " + id + " not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
-        }
+    public ResponseEntity<?> getById(@PathVariable Long id){
+        return svc.getPetById(id)
+            .<ResponseEntity<?>>map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("message", "Pet with ID " + id + " not found")));
     }
-    
 
-    @PutMapping("/api/pets/{id}")
-    public ResponseEntity<?> updatePet(@PathVariable Long id, @RequestBody Pet updatedPet) {
-        Optional<Pet> optionalPet = petService.updatePet(id, updatedPet);
-        if (optionalPet.isPresent()) {
-            // Success: return updated pet
-            return ResponseEntity.ok(optionalPet.get());
-        } else {
-            // Failure: pet not found
-            Map<String, String> errorBody = Map.of("message", "Pet with ID " + id + " not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
-        }
+    @PostMapping
+    public ResponseEntity<Pet> create(@Valid @RequestBody Pet pet){
+        Pet saved = svc.createPet(pet);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
-    
 
-    @DeleteMapping("/api/pets/{id}")
-    public ResponseEntity<?> deletePet(@PathVariable Long id) {
-        boolean deleted = petService.deletePet(id);
-        if (deleted) {
-            return ResponseEntity.ok(Map.of("message", "Pet deleted successfully"));
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("message", "Pet with ID " + id + " not found"));
-        }
-    }
+
+@GetMapping("/paginated")
+    public Page<Pet> getPetsPaginated(
+            @RequestParam(defaultValue = "") String name,
+            @RequestParam(defaultValue = "") String species,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir
+    ) {
+        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+                                                    : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return svc.getPets(name,species,pageable);}
 
 }

@@ -2,11 +2,11 @@ import React from 'react'
 
 const Footer = () => {
   return (
-   <footer style={{background:"#000fff",color:"white"}}>
+    <footer className='bg-dark text-white'>
 
-    <p>Thank you...</p>
-   </footer>
-    
+<p>Footer</p>
+
+    </footer>
   )
 }
 

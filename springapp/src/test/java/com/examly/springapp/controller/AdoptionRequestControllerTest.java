@@ -1,7 +1,5 @@
 package com.examly.springapp.controller;
-import com.examly.springapp.model.AdoptionRequest;
 import com.examly.springapp.model.Pet;
-import com.examly.springapp.service.AdoptionRequestService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

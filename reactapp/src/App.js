@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import Demo from './components/Demo'
 import Header from './components/Header'
 import Login from './components/Login'
+import Footer from './components/Footer'
 
 
 const App = () => {

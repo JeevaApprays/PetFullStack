@@ -1,6 +1,9 @@
 package com.examly.springapp.controller;
 import com.examly.springapp.model.Pet;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.security.auth.message.callback.PrivateKeyCallback.AliasRequest;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +19,17 @@ import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(AdoptionRequestController.class)
+@WebMvcTest(AdoptionRequestControllerTest.class)
 @AutoConfigureMockMvc(addFilters = false)
 public class AdoptionRequestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private AdoptionRequestService adoptionRequestService;
+    private AdoptionRequestControllerTest adoptionRequestService;
 
     private Pet pet;
-    private AdoptionRequest req1;
+    private AliasRequest req1;
 
     @BeforeEach
     public void setup() {
@@ -52,7 +55,7 @@ public class AdoptionRequestControllerTest {
 
     @Test
     public void testCreateAdoptionRequest_success() throws Exception {
-        given(adoptionRequestService.createAdoptionRequest(any(AdoptionRequest.class))).willAnswer(invocation -> {
+        given(adoptionRequestService.createAdoptionRequest(any(AdoptionRequestControllerTest.class))).willAnswer(invocation -> {
             AdoptionRequest ar = invocation.getArgument(0);
             ar.setId(10L);
             ar.setStatus("Pending");

@@ -13,6 +13,9 @@ const Home = () => {
       <Typography variant="h4" fontWeight="bold" color="red">
         Welcome to Pet Adoption Management System
       </Typography>
+      <Typography variant="h4" fontWeight="bold" color="red">
+        Thanks for Accessing
+      </Typography>
     </Box>
   );
 };
